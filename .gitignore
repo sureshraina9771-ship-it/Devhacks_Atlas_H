@@ -1,7 +1,7 @@
-# Large model files (exceed GitHub's 100MB limit)
-*.keras
-*.h5
-*.pkl
+# Large model files are now handled by Git LFS
+# *.keras - handled by Git LFS
+# *.h5 - handled by Git LFS  
+# *.pkl - handled by Git LFS
 *.model
 
 # Python cache
