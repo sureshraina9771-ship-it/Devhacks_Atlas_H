@@ -301,3 +301,146 @@ def get_doctor(doctor_id):
         'specialization': d.specialization,
         'contact': d.contact
     })
+# Update a doctor
+@app.route('/doctors/<int:doctor_id>', methods=['PUT'])
+def update_doctor(doctor_id):
+    d = Doctor.query.get(doctor_id)
+    if not d:
+        return jsonify({'message': 'Doctor not found!'}), 404
+    data = request.get_json()
+    d.name = data.get('name', d.name)
+    d.specialization = data.get('specialization', d.specialization)
+    d.contact = data.get('contact', d.contact)
+    db.session.commit()
+    return jsonify({'message': 'Doctor updated!'})
+
+# Delete a doctor
+@app.route('/doctors/<int:doctor_id>', methods=['DELETE'])
+def delete_doctor(doctor_id):
+    d = Doctor.query.get(doctor_id)
+    if not d:
+        return jsonify({'message': 'Doctor not found!'}), 404
+    db.session.delete(d)
+    db.session.commit()
+    return jsonify({'message': 'Doctor deleted!'})
+
+# Create a new diagnostic record
+@app.route('/diagnostics', methods=['POST'])
+def create_diagnostic():
+    data = request.get_json()
+    patient_id = data.get('patient_id')
+    symptoms = data.get('symptoms')
+    diagnosis = data.get('diagnosis')
+    ai_result = data.get('ai_result')
+    created_at = parse_datetime(data.get('created_at'))
+    record = DiagnosticRecord(
+        patient_id=patient_id,
+        symptoms=symptoms,
+        diagnosis=diagnosis,
+        ai_result=ai_result,
+        created_at=created_at
+    )
+    db.session.add(record)
+    db.session.commit()
+    return jsonify({'message': 'Diagnostic record created!', 'diagnostic_id': record.id})
+
+# Get all diagnostic records
+@app.route('/diagnostics', methods=['GET'])
+def get_diagnostics():
+    diagnostics = DiagnosticRecord.query.all()
+    result = []
+    for d in diagnostics:
+        result.append({
+            'id': d.id,
+            'patient_id': d.patient_id,
+            'symptoms': d.symptoms,
+            'diagnosis': d.diagnosis,
+            'ai_result': d.ai_result,
+            'created_at': d.created_at
+        })
+    return jsonify({'diagnostics': result})
+
+# Get a single diagnostic record by ID
+@app.route('/diagnostics/<int:diagnostic_id>', methods=['GET'])
+def get_diagnostic(diagnostic_id):
+    d = DiagnosticRecord.query.get(diagnostic_id)
+    if not d:
+        return jsonify({'message': 'Diagnostic record not found!'}), 404
+    return jsonify({
+        'id': d.id,
+        'patient_id': d.patient_id,
+        'symptoms': d.symptoms,
+        'diagnosis': d.diagnosis,
+        'ai_result': d.ai_result,
+        'created_at': d.created_at
+    })
+
+# Update a diagnostic record
+@app.route('/diagnostics/<int:diagnostic_id>', methods=['PUT'])
+def update_diagnostic(diagnostic_id):
+    d = DiagnosticRecord.query.get(diagnostic_id)
+    if not d:
+        return jsonify({'message': 'Diagnostic record not found!'}), 404
+    data = request.get_json()
+    d.symptoms = data.get('symptoms', d.symptoms)
+    d.diagnosis = data.get('diagnosis', d.diagnosis)
+    d.ai_result = data.get('ai_result', d.ai_result)
+    db.session.commit()
+    return jsonify({'message': 'Diagnostic record updated!'})
+
+# Delete a diagnostic record
+@app.route('/diagnostics/<int:diagnostic_id>', methods=['DELETE'])
+def delete_diagnostic(diagnostic_id):
+    d = DiagnosticRecord.query.get(diagnostic_id)
+    if not d:
+        return jsonify({'message': 'Diagnostic record not found!'}), 404
+    db.session.delete(d)
+    db.session.commit()
+    return jsonify({'message': 'Diagnostic record deleted!'})
+
+# Create a new teleconsultation
+@app.route('/teleconsultations', methods=['POST'])
+def create_teleconsultation():
+    data = request.get_json()
+    patient_id = data.get('patient_id')
+    doctor_id = data.get('doctor_id')
+    scheduled_time = parse_datetime(data.get('scheduled_time'))
+    notes = data.get('notes')
+    tele = Teleconsultation(
+        patient_id=patient_id,
+        doctor_id=doctor_id,
+        scheduled_time=scheduled_time,
+        notes=notes
+    )
+    db.session.add(tele)
+    db.session.commit()
+    return jsonify({'message': 'Teleconsultation created!', 'teleconsultation_id': tele.id})
+
+# Get all teleconsultations
+@app.route('/teleconsultations', methods=['GET'])
+def get_teleconsultations():
+    teleconsultations = Teleconsultation.query.all()
+    result = []
+    for t in teleconsultations:
+        result.append({
+            'id': t.id,
+            'patient_id': t.patient_id,
+            'doctor_id': t.doctor_id,
+            'scheduled_time': t.scheduled_time,
+            'notes': t.notes
+        })
+    return jsonify({'teleconsultations': result})
+
+# Get a single teleconsultation by ID
+@app.route('/teleconsultations/<int:tele_id>', methods=['GET'])
+def get_teleconsultation(tele_id):
+    t = Teleconsultation.query.get(tele_id)
+    if not t:
+        return jsonify({'message': 'Teleconsultation not found!'}), 404
+    return jsonify({
+        'id': t.id,
+        'patient_id': t.patient_id,
+        'doctor_id': t.doctor_id,
+        'scheduled_time': t.scheduled_time,
+        'notes': t.notes
+    })
