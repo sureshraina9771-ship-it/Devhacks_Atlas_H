@@ -9,6 +9,11 @@ import os
 import requests
 import google.generativeai as genai
 import json
+from googletrans import Translator
+import speech_recognition as sr
+from gtts import gTTS
+import io
+import base64
 
 app = Flask(__name__)
 CORS(app)
@@ -43,6 +48,9 @@ except Exception as e:
     le_consciousness = None
     le_risk = None
     print("Health risk model not loaded:", e)
+
+# Initialize translator
+translator = Translator()
 
 # Helper to parse date/datetime strings
 def parse_datetime(dt_str):
@@ -1054,41 +1062,70 @@ def chatbot():
     user_message = data.get('message', '')
     user_language = data.get('language', 'en-US')
 
-    # Map language codes to language names for the prompt
-    lang_map = {
-        'en-US': 'English',
-        'hi-IN': 'Hindi',
-        'kn-IN': 'Kannada',
-        'bho': 'Bhojpuri',
-        'har': 'Haryanvi'
-    }
-    language_name = lang_map.get(user_language, 'English')
-
-    if not user_message.strip():
-        return jsonify({'error': 'Message cannot be empty'}), 400
-
-    url = "http://localhost:11434/api/generate"
-    system_prompt = (
-        f"You are Garvis, a helpful, friendly, and intelligent assistant. "
-        f"Always reply in {language_name}. "
-        "If the user greets you, greet them back. "
-        "If the user asks a question, answer it as best as you can."
-    )
-    payload = {
-        "model": "mistral",
-        "prompt": f"{system_prompt}\nUser: {user_message}\nGarvis:",
-        "options": {"num_predict": 256}
-    }
     try:
-        response = requests.post(url, json=payload, stream=True)
-        answer = ""
-        for chunk in response.iter_lines():
-            if chunk:
-                result = json.loads(chunk.decode())
-                answer += result.get('response', '')
-        return jsonify({'response': answer})
+        # Translate user message to English if not in English
+        if user_language != 'en-US':
+            translated = translator.translate(user_message, dest='en')
+            user_message = translated.text
+
+        # Call Ollama API
+        url = "http://localhost:11434/api/generate"
+        system_prompt = (
+            "You are ATLAS, an intelligent and helpful healthcare assistant. "
+            "Keep responses concise and friendly. "
+            "Focus on providing accurate health-related information."
+        )
+        
+        payload = {
+            "model": "mistral",  # or your preferred Ollama model
+            "prompt": f"{system_prompt}\nUser: {user_message}\nATLAS:",
+            "stream": False
+        }
+
+        response = requests.post(url, json=payload)
+        bot_response = response.json().get('response', '')
+
+        # Translate response back to user's language if needed
+        if user_language != 'en-US':
+            translated = translator.translate(bot_response, dest=user_language[:2])
+            bot_response = translated.text
+
+        # Generate speech from text
+        tts = gTTS(text=bot_response, lang=user_language[:2])
+        speech_fp = io.BytesIO()
+        tts.write_to_fp(speech_fp)
+        speech_fp.seek(0)
+        audio_base64 = base64.b64encode(speech_fp.read()).decode()
+
+        return jsonify({
+            'response': bot_response,
+            'audio': audio_base64
+        })
+
     except Exception as e:
-        return jsonify({'response': f"Sorry, I couldn't process your request. {str(e)}"})
+        print(f"Error in chatbot: {str(e)}")
+        return jsonify({
+            'error': 'Sorry, I encountered an error processing your request.',
+            'details': str(e)
+        }), 500
+
+# Add voice transcription endpoint
+@app.route('/transcribe', methods=['POST'])
+def transcribe_audio():
+    if 'audio' not in request.files:
+        return jsonify({'error': 'No audio file provided'}), 400
+
+    audio_file = request.files['audio']
+    language = request.form.get('language', 'en-US')
+
+    try:
+        recognizer = sr.Recognizer()
+        with sr.AudioFile(audio_file) as source:
+            audio = recognizer.record(source)
+            text = recognizer.recognize_google(audio, language=language)
+            return jsonify({'transcription': text})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 # Signaling events for WebRTC
 @socketio.on('signal')

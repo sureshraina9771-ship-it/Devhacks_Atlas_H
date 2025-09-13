@@ -27,24 +27,38 @@ const Chatbot = () => {
   // Voice input (Speech-to-Text)
   const handleVoiceInput = () => {
     if (!('webkitSpeechRecognition' in window)) {
-      alert('Speech recognition not supported in this browser.');
-      return;
+        alert('Speech recognition not supported in this browser.');
+        return;
     }
+    
     if (listening) {
-      recognitionRef.current.stop();
-      setListening(false);
-      return;
+        recognitionRef.current.stop();
+        setListening(false);
+        return;
     }
+
     const recognition = new window.webkitSpeechRecognition();
     recognition.lang = language;
+    recognition.continuous = false;
     recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
+
     recognition.onresult = (event) => {
-      setInput(event.results[0][0].transcript);
-      setListening(false);
+        const transcript = event.results[0][0].transcript;
+        setInput(transcript);
+        setListening(false);
+        // Automatically send message when voice input is received
+        sendMessage(null, transcript);
     };
-    recognition.onerror = () => setListening(false);
-    recognition.onend = () => setListening(false);
+
+    recognition.onerror = (event) => {
+        console.error('Speech recognition error:', event.error);
+        setListening(false);
+    };
+
+    recognition.onend = () => {
+        setListening(false);
+    };
+
     recognitionRef.current = recognition;
     recognition.start();
     setListening(true);
@@ -80,22 +94,42 @@ const Chatbot = () => {
     }
   };
   // filepath: c:\Users\raj azad\Documents\newatlas3\newatlas\graminswasthyasetu29aug\frontend\src\Chatbot.js
-const sendMessage = async (e) => {
-  if (e) e.preventDefault();
-  if (!input.trim()) return;
-  const userMessage = { sender: 'user', text: input };
-  setMessages(prev => [...prev, userMessage]);
-  setLoading(true);
-  setInput('');
-  try {
-    const res = await axios.post(`${API_URL}/chatbot`, { message: userMessage.text, language });
-    const botMessage = res.data.response || 'Sorry, I could not understand.'; // <-- reads 'response'
-    setMessages(prev => [...prev, { sender: 'bot', text: botMessage }]);
-    speak(botMessage); // Speak the bot's answer
-  } catch {
-    setMessages(prev => [...prev, { sender: 'bot', text: 'Sorry, there was an error. Please try again.' }]);
-  }
-  setLoading(false);
+const sendMessage = async (e, voiceInput = null) => {
+    if (e) e.preventDefault();
+    const messageText = voiceInput || input;
+    if (!messageText.trim()) return;
+
+    const userMessage = { sender: 'user', text: messageText };
+    setMessages(prev => [...prev, userMessage]);
+    setLoading(true);
+    setInput('');
+
+    try {
+        const res = await axios.post(`${API_URL}/chatbot`, {
+            message: messageText,
+            language: language
+        });
+
+        const botMessage = { 
+            sender: 'bot', 
+            text: res.data.response,
+            audio: res.data.audio 
+        };
+        setMessages(prev => [...prev, botMessage]);
+
+        // Automatically play audio response
+        if (res.data.audio) {
+            const audio = new Audio(`data:audio/mp3;base64,${res.data.audio}`);
+            audio.play();
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        setMessages(prev => [...prev, {
+            sender: 'bot',
+            text: 'Sorry, there was an error. Please try again.'
+        }]);
+    }
+    setLoading(false);
 };
 
   return (
