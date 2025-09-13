@@ -1,0 +1,11 @@
+{
+  "profile": {
+    "title": "Profile",
+    "name": "Name",
+    "creditScore": "Credit Score",
+    "details": "Details",
+    "medicalReport": "Medical Report",
+    "addReport": "Add Report",
+    "logout": "Logout"
+  }
+}

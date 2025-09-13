@@ -1,0 +1,11 @@
+{
+  "profile": {
+    "title": "ಪ್ರೊಫೈಲ್",
+    "name": "ಹೆಸರು",
+    "creditScore": "ಕ್ರೆಡಿಟ್ ಸ್ಕೋರ್",
+    "details": "ವಿವರಗಳು",
+    "medicalReport": "ವೈದ್ಯಕೀಯ ವರದಿ",
+    "addReport": "ವರದಿಯನ್ನು ಸೇರಿಸಿ",
+    "logout": "ಲಾಗ್ ಔಟ್"
+  }
+}
