@@ -171,3 +171,85 @@ li {
   text-shadow: 0 2px 8px rgba(225,29,72,0.10);
 }
 
+/* Google Translate - Hide banner and fix positioning */
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+
+body {
+  top: 0px !important;
+}
+
+body.goog-te-rendered {
+  top: 0 !important;
+  position: static !important;
+}
+
+/* Style Google Translate Widget */
+#google_translate_element {
+  display: inline-block !important;
+}
+
+#google_translate_element .goog-te-gadget-simple {
+  background-color: transparent !important;
+  border: none !important;
+  font-size: 11px !important;
+  color: white !important;
+  font-family: inherit !important;
+}
+
+#google_translate_element .goog-te-gadget-simple .goog-te-menu-value {
+  color: white !important;
+}
+
+#google_translate_element .goog-te-gadget-simple .goog-te-menu-value span {
+  color: white !important;
+}
+
+#google_translate_element .goog-te-combo {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 4px !important;
+  padding: 4px 8px !important;
+  font-size: 11px !important;
+  color: #333 !important;
+  outline: none !important;
+  cursor: pointer !important;
+  min-width: 80px !important;
+}
+
+#google_translate_element .goog-te-combo:hover {
+  background-color: rgba(255, 255, 255, 1) !important;
+  border-color: #1976d2 !important;
+}
+
+#google_translate_element .goog-te-combo:focus {
+  border-color: #1976d2 !important;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2) !important;
+}
+
+/* Custom language selector styling */
+.language-selector .MuiSelect-select {
+  color: white !important;
+}
+
+.language-selector .MuiOutlinedInput-notchedOutline {
+  border-color: rgba(255,255,255,0.3) !important;
+}
+
+.language-selector:hover .MuiOutlinedInput-notchedOutline {
+  border-color: rgba(255,255,255,0.5) !important;
+}
+
+/* Mobile responsiveness for language selector */
+@media (max-width: 768px) {
+  .language-selector {
+    min-width: 80px !important;
+  }
+  
+  .language-selector .MuiSelect-select {
+    font-size: 10px !important;
+    padding: 4px 8px !important;
+  }
+}
+

@@ -25,6 +25,7 @@ import ProfilePage from './ProfilePage';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import BiotechIcon from '@mui/icons-material/Biotech';
 import Chatbot from './Chatbot';
+import GoogleTranslate from './components/GoogleTranslate';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -1037,6 +1038,22 @@ const [username, setUsername] = useState('');
         />
       </span>
     </Typography>
+    
+    {/* Google Translate Widget */}
+    <Box sx={{ mr: 2 }}>
+      <GoogleTranslate style={{
+        background: 'rgba(255,255,255,0.1)',
+        borderRadius: '8px',
+        padding: '4px 8px',
+        '& .goog-te-combo': {
+          background: 'transparent',
+          border: 'none',
+          color: 'white',
+          fontSize: '12px'
+        }
+      }} />
+    </Box>
+    
     <Button
       color="inherit"
       component={Link}
