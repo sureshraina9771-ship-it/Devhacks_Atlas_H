@@ -1,0 +1,11 @@
+{
+  "profile": {
+    "title": "ਪ੍ਰੋਫਾਇਲ",
+    "name": "ਨਾਮ",
+    "creditScore": "ਕ੍ਰੈਡਿਟ ਸਕੋਰ",
+    "details": "ਵੇਰਵੇ",
+    "medicalReport": "ਮੈਡਿਕਲ ਰਿਪੋਰਟ",
+    "addReport": "ਰਿਪੋਰਟ ਸ਼ਾਮਲ ਕਰੋ",
+    "logout": "ਲਾਗ ਆਊਟ"
+  }
+}

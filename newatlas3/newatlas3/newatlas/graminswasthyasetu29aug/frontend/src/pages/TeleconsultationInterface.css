@@ -1,0 +1,134 @@
+/* TeleconsultationInterface.css */
+
+/* Smooth transitions for all interactive elements */
+.teleconsultation-interface * {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Video call container animations */
+.video-container {
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Pulse animation for connection status */
+.connection-indicator {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Video call controls hover effects */
+.video-controls .MuiIconButton-root {
+  transition: all 0.2s ease-in-out;
+}
+
+.video-controls .MuiIconButton-root:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Card hover animations */
+.teleconsultation-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Language button active state animation */
+.language-button-active {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+  .video-container {
+    height: 300px !important;
+  }
+  
+  .teleconsultation-sidebar {
+    margin-top: 20px;
+  }
+  
+  .video-controls {
+    bottom: 10px !important;
+  }
+}
+
+/* Emergency button glow effect */
+.emergency-button {
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 5px #e74c3c, 0 0 10px #e74c3c, 0 0 15px #e74c3c;
+  }
+  to {
+    box-shadow: 0 0 10px #e74c3c, 0 0 20px #e74c3c, 0 0 30px #e74c3c;
+  }
+}
+
+/* AI Doctor assistant avatar animation */
+.ai-doctor-avatar {
+  animation: bounce 3s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-5px);
+  }
+  60% {
+    transform: translateY(-3px);
+  }
+}
+
+/* Loading state for video call */
+.video-loading {
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
+}

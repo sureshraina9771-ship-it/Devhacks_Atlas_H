@@ -11,6 +11,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import SignInPage from './pages/SignInPage';
 import DoctorsPage from './pages/DoctorsPage';
 import MedicinesPage from './pages/MedicinesPage';
+import MedicineVending from './pages/MedicineVending';
 import MaternalHealthRecordsPage from './pages/MaternalHealthRecordsPage';
 import EpidemicAlertsPage from './pages/EpidemicAlertsPage';
 import SanitaryPadVendingsPage from './pages/SanitaryPadVendingsPage';
@@ -47,7 +48,7 @@ const featureList = [
   },
   {
     label: 'Medicines',
-    to: '/medicines',
+    to: '/medicine-vending',
     img: 'https://www.shutterstock.com/image-vector/medicine-capsule-logo-260nw-706103674.jpg'
     },
   {
@@ -143,29 +144,29 @@ const translations = {
     diseasePredictor: "रोग पूर्वानुमान",
     healthRisk: "स्वास्थ्य जोखिम पूर्वानुमान"
   },
-  kn: {
-    dashboard: "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
-    welcome: "ಸ್ವಾಗತ",
-    loggedIn: "ನೀವು ಲಾಗಿನ್ ಆಗಿದ್ದೀರಿ.",
-    submitSymptoms: "ಲಕ್ಷಣಗಳನ್ನು ಸಲ್ಲಿಸಿ",
-    describeSymptoms: "ನಿಮ್ಮ ಲಕ್ಷಣಗಳನ್ನು ವಿವರಿಸಿ",
-    diagnose: "ನಿದಾನಿಸಿ",
-    yourDiagnosis: "ನಿಮ್ಮ ನಿದಾನ ಇತಿಹಾಸ",
-    symptoms: "ಲಕ್ಷಣಗಳು",
-    diagnosis: "ನಿದಾನ",
-    logout: "ಲಾಗ್‌ಔಟ್",
-    back: "ಹಿಂದೆ",
-    patients: "ರೋಗಿಗಳು",
-    doctors: "ಡಾಕ್ಟರ್‌ಗಳು",
-    medicines: "ಔಷಧಿಗಳು",
-    healthCredits: "ಆರೋಗ್ಯ ಕ್ರೆಡಿಟ್ಸ್",
-    maternalRecords: "ತಾಯಿ ಆರೋಗ್ಯ",
-    medicineSwaps: "ಔಷಧಿ ವಿನಿಮಯಗಳು",
-    epidemicAlerts: "ಸಾಂಕ್ರಾಮಿಕ ಎಚ್ಚರಿಕೆಗಳು",
-    sanitaryPadVendings: "ಸ್ಯಾನಿಟರಿ ಪ್ಯಾಡ್ ವೆಂಡಿಂಗ್",
-    teleconsultations: "ಟೆಲಿಕನ್ಸಲ್ಟೇಶನ್‌ಗಳು",
-    diseasePredictor: "ರೋಗ ಮುನ್ಸೂಚನೆ",
-    healthRisk: "ಆರೋಗ್ಯ ಅಪಾಯ ಮುನ್ಸೂಚನೆ"
+  pa: {
+    dashboard: "ਡੈਸ਼ਬੋਰਡ",
+    welcome: "ਸਵਾਗਤ",
+    loggedIn: "ਤੁਸੀਂ ਲਾਗ ਇਨ ਹੋ ਗਏ ਹੋ।",
+    submitSymptoms: "ਲੱਛਣ ਦਰਜ ਕਰੋ",
+    describeSymptoms: "ਆਪਣੇ ਲੱਛਣ ਲਿਖੋ",
+    diagnose: "ਨਿਦਾਨ ਕਰੋ",
+    yourDiagnosis: "ਤੁਹਾਡਾ ਨਿਦਾਨ ਇਤਿਹਾਸ",
+    symptoms: "ਲੱਛਣ",
+    diagnosis: "ਨਿਦਾਨ",
+    logout: "ਲਾਗ ਆਊਟ",
+    back: "ਵਾਪਸ",
+    patients: "ਮਰੀਜ਼",
+    doctors: "ਡਾਕਟਰ",
+    medicines: "ਦਵਾਈਆਂ",
+    healthCredits: "ਸਿਹਤ ਕ੍ਰੈਡਿਟ",
+    maternalRecords: "ਮਾਤਰੀ ਸਿਹਤ",
+    medicineSwaps: "ਦਵਾਈ ਬਦਲਣਾ",
+    epidemicAlerts: "ਮਹਾਂਮਾਰੀ ਚੇਤਾਵਨੀ",
+    sanitaryPadVendings: "ਸੈਨਿਟਰੀ ਪੈਡ ਵੈਂਡਿੰਗ",
+    teleconsultations: "ਟੈਲੀ ਸਲਾਹ",
+    diseasePredictor: "ਬਿਮਾਰੀ ਪੂਰਵਾਨੁਮਾਨ",
+    healthRisk: "ਸਿਹਤ ਜੋਖਮ ਪੂਰਵਾਨੁਮਾਨ"
   }
 };
 
@@ -178,9 +179,9 @@ const homeTranslations = {
     title: "ग्रामीण स्वास्थ्य सेतु",
     subtitle: "तकनीक के साथ ग्रामीण स्वास्थ्य को सशक्त बनाना",
   },
-  kn: {
-    title: "ಗ್ರಾಮೀಣ ಆರೋಗ್ಯ ಸೇತು",
-    subtitle: "ತಂತ್ರಜ್ಞಾನದಿಂದ ಗ್ರಾಮೀಣ ಆರೋಗ್ಯವನ್ನು ಶಕ್ತಿಪಡಿಸುವುದು",
+  pa: {
+    title: "ਗਰਾਮੀਣ ਸਵਾਸਥਿਆ ਸੇਤੁ",
+    subtitle: "ਤਕਨੋਲੋਜੀ ਨਾਲ ਗਰਾਮੀਣ ਸਿਹਤ ਸੇਵਾ ਨੂੰ ਸਸ਼ਕਤ ਬਣਾਉਣਾ",
   }
 };
 
@@ -213,19 +214,19 @@ const featureTranslations = {
     'Disease Predictor': 'रोग पूर्वानुमान',
     'Health Risk Predictor': 'स्वास्थ्य जोखिम पूर्वानुमान'
   },
-  kn: {
-    'MRI Scan Prediction': 'ಎಂಆರ್‌ಐ ಸ್ಕ್ಯಾನ್ ಮುನ್ಸೂಚನೆ',
-    'Patients': 'ರೋಗಿಗಳು',
-    'Doctors': 'ಡಾಕ್ಟರ್‌ಗಳು',
-    'Medicines': 'ಔಷಧಿಗಳು',
-    'Health Credits': 'ಆರೋಗ್ಯ ಕ್ರೆಡಿಟ್ಸ್',
-    'Maternal Health': 'ತಾಯಿ ಆರೋಗ್ಯ',
-    'Medicine Swaps': 'ಔಷಧಿ ವಿನಿಮಯಗಳು',
-    'Epidemic Alerts': 'ಸಾಂಕ್ರಾಮಿಕ ಎಚ್ಚರಿಕೆಗಳು',
-    'Sanitary Pad Vending': 'ಸ್ಯಾನಿಟರಿ ಪ್ಯಾಡ್ ವೆಂಡಿಂಗ್',
-    'Teleconsultations': 'ಟೆಲಿಕನ್ಸಲ್ಟೇಶನ್‌ಗಳು',
-    'Disease Predictor': 'ರೋಗ ಮುನ್ಸೂಚನೆ',
-    'Health Risk Predictor': 'ಆರೋಗ್ಯ ಅಪಾಯ ಮುನ್ಸೂಚನೆ'
+  pa: {
+    'MRI Scan Prediction': 'ਏਮਆਰਆਈ ਸਕੈਨ ਪੂਰਵਾਨੁਮਾਨ',
+    'Patients': 'ਮਰੀਜ਼',
+    'Doctors': 'ਡਾਕਟਰ',
+    'Medicines': 'ਦਵਾਈਆਂ',
+    'Health Credits': 'ਸਿਹਤ ਕ੍ਰੈਡਿਟ',
+    'Maternal Health': 'ਮਾਤਰੀ ਸਿਹਤ',
+    'Medicine Swaps': 'ਦਵਾਈ ਬਦਲਣਾ',
+    'Epidemic Alerts': 'ਮਹਾਂਮਾਰੀ ਚੇਤਾਵਨੀ',
+    'Sanitary Pad Vending': 'ਸੈਨਿਟਰੀ ਪੈਡ ਵੈਂਡਿੰਗ',
+    'Teleconsultations': 'ਟੈਲੀ ਸਲਾਹ',
+    'Disease Predictor': 'ਬਿਮਾਰੀ ਪੂਰਵਾਨੁਮਾਨ',
+    'Health Risk Predictor': 'ਸਿਹਤ ਜੋਖਮ ਪੂਰਵਾਨੁਮਾਨ'
   }
 };
 
@@ -258,7 +259,7 @@ function Home() {
         >
           <MenuItem value="en">English</MenuItem>
           <MenuItem value="hi">हिन्दी</MenuItem>
-          <MenuItem value="kn">ಕನ್ನಡ</MenuItem>
+          <MenuItem value="pa">ਪੰਜਾਬੀ</MenuItem>
         </Select>
       </Box>
       <LocalHospitalIcon sx={{ fontSize: 80, color: '#1976d2' }} />
@@ -290,38 +291,57 @@ function Home() {
           marginTop: '40px'
         }}
       >
-        {featureList.map((feature, idx) => (
-          <Button
-            key={feature.label}
-            variant="contained"
-            color="primary"
-            component={Link}
-            to={feature.to}
-            sx={{
-              width: 180,
-              height: 180,
-              borderRadius: 4,
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '1.1rem',
-              boxShadow: 3,
-              background: 'rgba(255,255,255,0.85)',
-              textTransform: 'none',
-              gap: 2,
-              '&:hover': { background: '#c35d2aff' }
-            }}
-          >
-            <img
-              src={feature.img}
-              alt={feature.label}
-              style={{ width: 64, height: 64, marginBottom: 12, borderRadius: 12 }}
-            />
-            <span style={{ color: '#222', fontWeight: 600 }}>
-              {featureT[feature.label] || feature.label}
-            </span>
-          </Button>
-        ))}
+        {featureList.map((feature, idx) => {
+          return (
+            <Button
+              key={feature.label}
+              variant="contained"
+              color="primary"
+              component={Link}
+              to={feature.to}
+              sx={{
+                width: 180,
+                height: 180,
+                borderRadius: 4,
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '1.1rem',
+                fontWeight: 600,
+                boxShadow: 3,
+                background: 'rgba(255,255,255,0.85)',
+                textTransform: 'none',
+                gap: 2,
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                '&:hover': { 
+                  background: '#c35d2aff',
+                  transform: 'translateY(-2px)',
+                  boxShadow: 6
+                }
+              }}
+            >
+              <img
+                src={feature.img}
+                alt={feature.label}
+                style={{ 
+                  width: 64, 
+                  height: 64, 
+                  marginBottom: 12, 
+                  borderRadius: 12,
+                  transition: 'transform 0.3s ease'
+                }}
+              />
+              <span style={{ 
+                color: '#222', 
+                fontWeight: 600,
+                textAlign: 'center',
+                lineHeight: 1.2
+              }}>
+                {featureT[feature.label] || feature.label}
+              </span>
+            </Button>
+          );
+        })}
       </div>
       {/* Emergency Contact Logo */}
       <div
@@ -1045,6 +1065,7 @@ const [username, setUsername] = useState('');
               <Route path="/patients" element={<PatientsPage />} />
               <Route path="/doctors" element={<DoctorsPage />} />
               <Route path="/medicines" element={<MedicinesPage />} />
+              <Route path="/medicine-vending" element={<MedicineVending />} />
               <Route path="/health-credits" element={<HealthCreditsPage />} />
               <Route path="/maternal-health-records" element={<MaternalHealthRecordsPage />} />
               {/* <Route path="/medicine-swaps" element={<MedicineSwapsPage />} /> */}

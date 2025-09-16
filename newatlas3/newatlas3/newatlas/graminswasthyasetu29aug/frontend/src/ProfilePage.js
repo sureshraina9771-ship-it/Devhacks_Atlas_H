@@ -25,15 +25,15 @@ const translations = {
     addReport: "रिपोर्ट जोड़ें",
     logout: "लॉगआउट"
   },
-  kn: {
-    creditScore: "ಕ್ರೆಡಿಟ್ ಸ್ಕೋರ್",
-    medicalReports: "ವೈದ್ಯಕೀಯ ವರದಿಗಳು",
-    addNewReport: "ಹೊಸ ವರದಿ ಸೇರಿಸಿ",
-    reportHeading: "ವರದಿ ಶೀರ್ಷಿಕೆ",
-    reportDescription: "ವರದಿ ವಿವರಣೆ",
-    reportImageUrl: "ವರದಿ ಚಿತ್ರ URL",
-    addReport: "ವರದಿ ಸೇರಿಸಿ",
-    logout: "ಲಾಗ್ ಔಟ್"
+  pa: {
+    creditScore: "ਕ੍ਰੈਡਿਟ ਸਕੋਰ",
+    medicalReports: "ਮੈਡਿਕਲ ਰਿਪੋਰਟਾਂ",
+    addNewReport: "ਨਵੀਂ ਰਿਪੋਰਟ ਸ਼ਾਮਲ ਕਰੋ",
+    reportHeading: "ਰਿਪੋਰਟ ਦਾ ਸਿਰਲੇਖ",
+    reportDescription: "ਰਿਪੋਰਟ ਦਾ ਵੇਰਵਾ",
+    reportImageUrl: "ਰਿਪੋਰਟ ਤਸਵੀਰ URL",
+    addReport: "ਰਿਪੋਰਟ ਸ਼ਾਮਲ ਕਰੋ",
+    logout: "ਲਾਗ ਆਊਟ"
   }
 };
 
@@ -86,7 +86,7 @@ function ProfilePage() {
             >
               <MenuItem value="en">English</MenuItem>
               <MenuItem value="hi">हिन्दी</MenuItem>
-              <MenuItem value="kn">ಕನ್ನಡ</MenuItem>
+              <MenuItem value="pa">ਪੰਜਾਬੀ</MenuItem>
             </Select>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>

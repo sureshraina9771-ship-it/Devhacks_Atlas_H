@@ -37,18 +37,18 @@ const translations = {
     cancel: "रद्द करें",
     add: "जोड़ें"
   },
-  kn: {
-    medicines: "ಔಷಧಿಗಳು",
-    addMedicine: "ಔಷಧಿ ಸೇರಿಸಿ",
-    name: "ಹೆಸರು",
-    batchNumber: "ಬ್ಯಾಚ್ ಸಂಖ್ಯೆ",
-    expiryDate: "ಅವಧಿ ಮುಗಿಯುವ ದಿನಾಂಕ",
-  quantity: "ಪ್ರಮಾಣ",
-    actions: "ಕ್ರಿಯೆಗಳು",
-    noMedicines: "ಯಾವುದೇ ಔಷಧಿಗಳು ಕಂಡುಬಂದಿಲ್ಲ.",
-    addNewMedicine: "ಹೊಸ ಔಷಧಿ ಸೇರಿಸಿ",
-    cancel: "ರದ್ದುಮಾಡಿ",
-    add: "ಸೇರಿಸಿ"
+  pa: {
+    medicines: "ਦਵਾਈਆਂ",
+    addMedicine: "ਦਵਾਈ ਸ਼ਾਮਲ ਕਰੋ",
+    name: "ਨਾਮ",
+    batchNumber: "ਬੈਚ ਨੰਬਰ",
+    expiryDate: "ਸਮਾਂ ਦੀ ਤਰੀਕ",
+  quantity: "ਮਾਤਰਾ",
+    actions: "ਕਾਰਵਾਈਆਂ",
+    noMedicines: "ਕੋਈ ਦਵਾਈਆਂ ਨਹੀਂ ਮਿਲੀਆਂ।",
+    addNewMedicine: "ਨਵੀਂ ਦਵਾਈ ਸ਼ਾਮਲ ਕਰੋ",
+    cancel: "ਰਦ੍ਦ ਕਰੋ",
+    add: "ਸ਼ਾਮਲ ਕਰੋ"
   }
 };
 
@@ -101,7 +101,7 @@ export default function MedicinesPage() {
         >
           <MenuItem value="en">English</MenuItem>
           <MenuItem value="hi">हिन्दी</MenuItem>
-          <MenuItem value="kn">ಕನ್ನಡ</MenuItem>
+          <MenuItem value="pa">ਪੰਜਾਬੀ</MenuItem>
         </Select>
       </Box>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={3}>

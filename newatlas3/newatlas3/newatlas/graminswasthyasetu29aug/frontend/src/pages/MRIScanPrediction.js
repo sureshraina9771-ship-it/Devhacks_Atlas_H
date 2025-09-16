@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Box, Button, Card, CardContent, Typography, CircularProgress, Grid, Divider, Alert, LinearProgress, Paper, Tooltip, IconButton, Accordion, AccordionSummary, AccordionDetails, Select, MenuItem } from '@mui/material';
+import React, { useState, useRef } from 'react';
+import { Box, Button, Card, CardContent, Typography, CircularProgress, Grid, Divider, Alert, LinearProgress, Paper, Tooltip, IconButton, Accordion, AccordionSummary, AccordionDetails, Select, MenuItem, Stack, Avatar, Chip, Badge, Zoom, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import WarningIcon from '@mui/icons-material/Warning';
@@ -7,14 +7,29 @@ import TimelineIcon from '@mui/icons-material/Timeline';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
-import { styled } from '@mui/material/styles';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import ImageIcon from '@mui/icons-material/Image';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AnalyticsIcon from '@mui/icons-material/Analytics';
+import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
+import CloseIcon from '@mui/icons-material/Close';
+import ZoomInIcon from '@mui/icons-material/ZoomIn';
+import { styled, keyframes } from '@mui/material/styles';
 
 // Simple translations for demonstration
 const translations = {
   en: {
     pageTitle: "Brain Tumor MRI Scan Prediction",
     upload: "Upload MRI Scan",
-    analyze: "Analyze",
+    uploadDescription: "Drag and drop your MRI scan image here, or click to browse",
+    supportedFormats: "Supported: JPG, PNG, DICOM",
+    fileSelected: "File Selected",
+    removeFile: "Remove File",
+    analyze: "Analyze Scan",
+    analyzing: "Analyzing...",
+    clickToEnlarge: "Click to enlarge image",
+    closeImage: "Close",
     selectedImage: "Selected Image",
     analysisCompleted: "Analysis completed. Please review the comprehensive results below.",
     primaryResults: "Primary Analysis Results",
@@ -65,7 +80,14 @@ const translations = {
   hi: {
     pageTitle: "ब्रेन ट्यूमर एमआरआई स्कैन पूर्वानुमान",
     upload: "एमआरआई स्कैन अपलोड करें",
-    analyze: "विश्लेषण करें",
+    uploadDescription: "अपनी एमआरआई स्कैन छवि यहां खींचें और छोड़ें, या ब्राउज़ करने के लिए क्लिक करें",
+    supportedFormats: "समर्थित: JPG, PNG, DICOM",
+    fileSelected: "फ़ाइल चयनित",
+    removeFile: "फ़ाइल हटाएं",
+    analyze: "स्कैन का विश्लेषण करें",
+    analyzing: "विश्लेषण कर रहा है...",
+    clickToEnlarge: "छवि को बड़ा करने के लिए क्लिक करें",
+    closeImage: "बंद करें",
     selectedImage: "चयनित छवि",
     analysisCompleted: "विश्लेषण पूरा हुआ। कृपया नीचे दिए गए विस्तृत परिणाम देखें।",
     primaryResults: "प्राथमिक विश्लेषण परिणाम",
@@ -114,8 +136,15 @@ const translations = {
   },
   kn: {
     pageTitle: "ಮೆದುಳಿನ ಟ್ಯೂಮರ್ ಎಂಆರ್‌ಐ ಸ್ಕ್ಯಾನ್ ಮುನ್ಸೂಚನೆ",
-    upload: "ಎಂಆರ್‌ಐ ಸ್ಕ್ಯಾನ್ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ",
-    analyze: "ವಿಶ್ಲೇಷಿಸಿ",
+    upload: "ಎಂಆರ್‌ಇ ಸ್ಕ್ಯಾನ್ ಅಪ್‌ಲೊಡ್ ಮಾಡಿ",
+    uploadDescription: "ನಿಮ್ಮ ಎಂಆರ್‌ಇ ಸ್ಕ್ಯಾನ್ ಚಿತ್ರವನ್ನು ಇಲ್ಲಿ ಎಳೆಯೆ ಎಳೆಯಿರಿ, ಅಥವಾ ಬ್ರಾವ್ಸ್ ಮಾಡಲು ಕ್ಲಿಕ್ ಮಾಡಿ",
+    supportedFormats: "ಸಮರ್ಥನೆ: JPG, PNG, DICOM",
+    fileSelected: "ಭಾಇಲ್ ಆಯ್ಕೆ ಮಾಡಲಾಗಿದೆ",
+    removeFile: "ಭಾಇಲ್ ತೆಗೆಯೆ",
+    analyze: "ಸ್ಕ್ಯಾನ್ ವಿಶ್ಲೇಷಿಸಿ",
+    analyzing: "ವಿಶ್ಲೇಷಿಸುತ್ತಿದೆ...",
+    clickToEnlarge: "ಚಿತ್ರವನ್ನು ವಿಸ್ತರಿಸಲು ಕ್ಲಿಕ್ ಮಾಡಿ",
+    closeImage: "ಮುಚ್ಚಿ",
     selectedImage: "ಆಯ್ದ ಚಿತ್ರ",
     analysisCompleted: "ವಿಶ್ಲೇಷಣೆ ಪೂರ್ಣಗೊಂಡಿದೆ. ದಯವಿಟ್ಟು ಕೆಳಗಿನ ಸಮಗ್ರ ಫಲಿತಾಂಶಗಳನ್ನು ಪರಿಶೀಲಿಸಿ.",
     primaryResults: "ಪ್ರಾಥಮಿಕ ವಿಶ್ಲೇಷಣಾ ಫಲಿತಾಂಶಗಳು",
@@ -164,6 +193,30 @@ const translations = {
   }
 };
 
+// Animation keyframes
+const pulse = keyframes`
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+`;
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
 const VisuallyHiddenInput = styled('input')`
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
@@ -175,6 +228,58 @@ const VisuallyHiddenInput = styled('input')`
   white-space: nowrap;
   width: 1px;
 `;
+
+const UploadDropZone = styled(Box)(({ theme, isDragActive, hasFile }) => ({
+  border: `2px dashed ${isDragActive ? theme.palette.primary.main : hasFile ? theme.palette.success.main : theme.palette.grey[400]}`,
+  borderRadius: theme.spacing(2),
+  padding: theme.spacing(6, 4),
+  textAlign: 'center',
+  cursor: 'pointer',
+  transition: 'all 0.3s ease',
+  backgroundColor: isDragActive 
+    ? `${theme.palette.primary.light}15` 
+    : hasFile 
+    ? `${theme.palette.success.light}15` 
+    : theme.palette.grey[50],
+  '&:hover': {
+    borderColor: theme.palette.primary.main,
+    backgroundColor: `${theme.palette.primary.light}20`,
+    transform: 'translateY(-2px)',
+    boxShadow: theme.shadows[4]
+  },
+  ...(isDragActive && {
+    animation: `${pulse} 1s infinite`
+  })
+}));
+
+const FilePreviewCard = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(2),
+  borderRadius: theme.spacing(2),
+  background: `linear-gradient(135deg, ${theme.palette.success.light}20, ${theme.palette.success.light}10)`,
+  border: `1px solid ${theme.palette.success.light}`,
+  animation: `${fadeIn} 0.5s ease`,
+  position: 'relative',
+  overflow: 'hidden'
+}));
+
+const AnalyzeButton = styled(Button)(({ theme }) => ({
+  background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+  borderRadius: theme.spacing(3),
+  padding: theme.spacing(1.5, 4),
+  fontSize: '1.1rem',
+  fontWeight: 'bold',
+  textTransform: 'none',
+  boxShadow: theme.shadows[4],
+  '&:hover': {
+    background: `linear-gradient(45deg, ${theme.palette.primary.dark}, ${theme.palette.secondary.dark})`,
+    transform: 'translateY(-2px)',
+    boxShadow: theme.shadows[8]
+  },
+  '&:disabled': {
+    background: theme.palette.grey[300],
+    color: theme.palette.grey[500]
+  }
+}));
 
 const ConfidenceIndicator = ({ confidence, t }) => {
   let color = confidence > 0.7 ? '#2e7d32' : confidence > 0.4 ? '#ed6c02' : '#1976d2';
@@ -290,16 +395,79 @@ const MRIScanPrediction = () => {
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
   const [language, setLanguage] = useState('en');
+  const [isDragActive, setIsDragActive] = useState(false);
+  const [imageDialogOpen, setImageDialogOpen] = useState(false);
+  const fileInputRef = useRef(null);
   const t = translations[language];
 
-  const handleFileSelect = (event) => {
-    const file = event.target.files[0];
-    if (file) {
+  const processFile = (file) => {
+    if (file && file.type.startsWith('image/')) {
       setSelectedFile(file);
       setPreviewUrl(URL.createObjectURL(file));
       setResult(null);
       setError(null);
+    } else {
+      setError('Please select a valid image file (JPG, PNG, DICOM)');
     }
+  };
+
+  const handleFileSelect = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      processFile(file);
+    }
+  };
+
+  const handleDragEnter = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragActive(true);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragActive(false);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragActive(false);
+    
+    const files = e.dataTransfer.files;
+    if (files && files[0]) {
+      processFile(files[0]);
+    }
+  };
+
+  const handleRemoveFile = () => {
+    setSelectedFile(null);
+    setPreviewUrl(null);
+    setResult(null);
+    setError(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
+  const handleUploadClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleImageClick = () => {
+    setImageDialogOpen(true);
+  };
+
+  const handleCloseImageDialog = () => {
+    setImageDialogOpen(false);
   };
 
   const handleSubmit = async () => {
@@ -353,28 +521,190 @@ const MRIScanPrediction = () => {
         {t.pageTitle}
       </Typography>
 
-      <Box sx={{ my: 3 }}>
-        <Button
-          component="label"
-          variant="contained"
-          sx={{ mr: 2 }}
-        >
+      {/* Enhanced Upload Section */}
+      <Paper elevation={3} sx={{ p: 3, mb: 4, borderRadius: 3, background: 'linear-gradient(135deg, #f8f9fa, #e9ecef)' }}>
+        <Typography variant="h5" fontWeight="bold" color="primary" sx={{ mb: 3, display: 'flex', alignItems: 'center', gap: 1 }}>
+          <MedicalServicesIcon sx={{ fontSize: 32 }} />
           {t.upload}
-          <VisuallyHiddenInput
-            type="file"
-            accept="image/*"
-            onChange={handleFileSelect}
-          />
-        </Button>
+        </Typography>
 
-        <Button
-          variant="contained"
-          onClick={handleSubmit}
-          disabled={!selectedFile || loading}
-        >
-          {loading ? <CircularProgress size={24} /> : t.analyze}
-        </Button>
-      </Box>
+        {!selectedFile ? (
+          <UploadDropZone
+            isDragActive={isDragActive}
+            hasFile={!!selectedFile}
+            onDragEnter={handleDragEnter}
+            onDragLeave={handleDragLeave}
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+            onClick={handleUploadClick}
+            sx={{ mb: 3 }}
+          >
+            <Stack alignItems="center" spacing={2}>
+              <Avatar sx={{ 
+                bgcolor: isDragActive ? 'primary.main' : 'grey.400',
+                width: 64,
+                height: 64,
+                transition: 'all 0.3s ease'
+              }}>
+                <CloudUploadIcon sx={{ fontSize: 32 }} />
+              </Avatar>
+              
+              <Box textAlign="center">
+                <Typography variant="h6" fontWeight="bold" color="primary" gutterBottom>
+                  {t.upload}
+                </Typography>
+                <Typography variant="body1" color="text.secondary" sx={{ mb: 1 }}>
+                  {t.uploadDescription}
+                </Typography>
+                <Chip 
+                  label={t.supportedFormats}
+                  size="small"
+                  variant="outlined"
+                  color="primary"
+                />
+              </Box>
+            </Stack>
+            
+            <VisuallyHiddenInput
+              ref={fileInputRef}
+              type="file"
+              accept="image/*,.dcm"
+              onChange={handleFileSelect}
+            />
+          </UploadDropZone>
+        ) : (
+          <Box sx={{ mb: 3 }}>
+            {/* File Info Header */}
+            <FilePreviewCard elevation={2} sx={{ mb: 2 }}>
+              <Stack direction="row" alignItems="center" spacing={2}>
+                <Avatar sx={{ bgcolor: 'success.main', width: 50, height: 50 }}>
+                  <CheckCircleIcon />
+                </Avatar>
+                
+                <Box flex={1}>
+                  <Typography variant="subtitle1" fontWeight="bold" color="success.main">
+                    {t.fileSelected}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {selectedFile?.name}
+                  </Typography>
+                  <Typography variant="caption" color="text.secondary">
+                    {(selectedFile?.size / (1024 * 1024)).toFixed(2)} MB
+                  </Typography>
+                </Box>
+                
+                <Tooltip title={t.removeFile}>
+                  <IconButton 
+                    onClick={handleRemoveFile}
+                    sx={{ 
+                      color: 'grey.500',
+                      '&:hover': { 
+                        color: 'error.main',
+                        backgroundColor: 'error.light' 
+                      }
+                    }}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </Tooltip>
+              </Stack>
+            </FilePreviewCard>
+            
+            {/* Large MRI Preview Image */}
+            {previewUrl && (
+              <Paper 
+                elevation={6}
+                sx={{ 
+                  p: 3,
+                  borderRadius: 3,
+                  background: 'linear-gradient(135deg, #ffffff, #f8f9fa)',
+                  textAlign: 'center'
+                }}
+              >
+                <Stack spacing={2} alignItems="center">
+                  <Stack direction="row" alignItems="center" spacing={1}>
+                    <ImageIcon color="primary" />
+                    <Typography variant="h6" fontWeight="bold" color="primary">
+                      {t.selectedImage}
+                    </Typography>
+                  </Stack>
+                  
+                  <Tooltip title={t.clickToEnlarge} arrow>
+                    <Box
+                      onClick={handleImageClick}
+                      sx={{
+                        p: 2,
+                        borderRadius: 2,
+                        background: '#ffffff',
+                        border: '3px solid #e3f2fd',
+                        boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+                        display: 'inline-block',
+                        maxWidth: '100%',
+                        cursor: 'zoom-in',
+                        transition: 'all 0.3s ease',
+                        '&:hover': {
+                          transform: 'scale(1.02)',
+                          boxShadow: '0 12px 32px rgba(0,0,0,0.2)',
+                          border: '3px solid #1976d2'
+                        }
+                      }}
+                    >
+                      <img
+                        src={previewUrl}
+                        alt="MRI Scan Preview"
+                        style={{
+                          maxWidth: '100%',
+                          width: 'auto',
+                          height: 'auto',
+                          maxHeight: 500,
+                          minHeight: 200,
+                          borderRadius: 8,
+                          display: 'block'
+                        }}
+                      />
+                    </Box>
+                  </Tooltip>
+                  
+                  <Stack direction="row" alignItems="center" spacing={1}>
+                    <ZoomInIcon color="primary" fontSize="small" />
+                    <Typography variant="body2" color="primary" fontWeight="medium">
+                      {t.clickToEnlarge}
+                    </Typography>
+                  </Stack>
+                  
+                  <Typography variant="body2" color="text.secondary">
+                    📏 Click "Analyze Scan" below to process this MRI image
+                  </Typography>
+                </Stack>
+              </Paper>
+            )}
+          </Box>
+        )}
+
+        {/* Enhanced Analyze Button */}
+        <Box textAlign="center">
+          <AnalyzeButton
+            onClick={handleSubmit}
+            disabled={!selectedFile || loading}
+            startIcon={
+              loading ? (
+                <CircularProgress size={20} color="inherit" />
+              ) : (
+                <AnalyticsIcon />
+              )
+            }
+            size="large"
+          >
+            {loading ? t.analyzing : t.analyze}
+          </AnalyzeButton>
+          
+          {selectedFile && !loading && (
+            <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+              AI-powered brain tumor detection using advanced deep learning algorithms
+            </Typography>
+          )}
+        </Box>
+      </Paper>
 
       {error && (
         <Typography color="error" sx={{ my: 2 }}>
@@ -382,18 +712,6 @@ const MRIScanPrediction = () => {
         </Typography>
       )}
 
-      {previewUrl && (
-        <Box sx={{ my: 3 }}>
-          <Typography variant="h6" gutterBottom>
-            {t.selectedImage}
-          </Typography>
-          <img
-            src={previewUrl}
-            alt="MRI Scan Preview"
-            style={{ maxWidth: '100%', maxHeight: 400 }}
-          />
-        </Box>
-      )}
 
       {result && (
         <Box sx={{ my: 3, mx: 2 }}>
@@ -527,6 +845,79 @@ const MRIScanPrediction = () => {
           </Grid>
         </Box>
       )}
+
+      {/* Image Zoom Dialog */}
+      <Dialog
+        open={imageDialogOpen}
+        onClose={handleCloseImageDialog}
+        maxWidth="lg"
+        fullWidth
+        PaperProps={{
+          sx: {
+            bgcolor: 'transparent',
+            boxShadow: 'none',
+            overflow: 'hidden'
+          }
+        }}
+      >
+        <DialogTitle sx={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'space-between',
+          bgcolor: 'rgba(0,0,0,0.8)',
+          color: 'white'
+        }}>
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <ZoomInIcon />
+            <Typography variant="h6">
+              {t.selectedImage} - {selectedFile?.name}
+            </Typography>
+          </Stack>
+          <IconButton 
+            onClick={handleCloseImageDialog}
+            sx={{ color: 'white' }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent 
+          sx={{ 
+            bgcolor: 'rgba(0,0,0,0.9)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            p: 2,
+            minHeight: '60vh'
+          }}
+        >
+          {previewUrl && (
+            <img
+              src={previewUrl}
+              alt="MRI Scan Full View"
+              style={{
+                maxWidth: '100%',
+                maxHeight: '80vh',
+                width: 'auto',
+                height: 'auto',
+                borderRadius: 8,
+                boxShadow: '0 8px 32px rgba(255,255,255,0.1)'
+              }}
+            />
+          )}
+        </DialogContent>
+        <DialogActions sx={{ 
+          bgcolor: 'rgba(0,0,0,0.8)',
+          justifyContent: 'center'
+        }}>
+          <Button 
+            onClick={handleCloseImageDialog}
+            variant="contained"
+            startIcon={<CloseIcon />}
+          >
+            {t.closeImage}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };

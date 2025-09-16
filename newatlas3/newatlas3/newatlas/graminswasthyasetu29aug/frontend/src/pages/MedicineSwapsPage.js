@@ -39,19 +39,19 @@ const translations = {
     cancel: "रद्द करें",
     add: "जोड़ें"
   },
-  kn: {
-    medicineSwaps: "ಔಷಧಿ ವಿನಿಮಯಗಳು",
-    addSwap: "ವಿನಿಮಯ ಸೇರಿಸಿ",
-    patientId: "ರೋಗಿಯ ಐಡಿ",
-    oldMedicineId: "ಹಳೆಯ ಔಷಧಿ ಐಡಿ",
-    newMedicineId: "ಹೊಸ ಔಷಧಿ ಐಡಿ",
-    status: "ಸ್ಥಿತಿ",
-    swappedAt: "ವಿನಿಮಯ ಸಮಯ",
-    actions: "ಕ್ರಿಯೆಗಳು",
-    noSwaps: "ಯಾವುದೇ ವಿನಿಮಯಗಳು ಕಂಡುಬಂದಿಲ್ಲ.",
-    addMedicineSwap: "ಔಷಧಿ ವಿನಿಮಯ ಸೇರಿಸಿ",
-    cancel: "ರದ್ದುಮಾಡಿ",
-    add: "ಸೇರಿಸಿ"
+  pa: {
+    medicineSwaps: "ਦਵਾਈ ਬਦਲਣਾ",
+    addSwap: "ਬਦਲਣਾ ਸ਼ਾਮਲ ਕਰੋ",
+    patientId: "ਮਰੀਜ਼ ਆਈਡੀ",
+    oldMedicineId: "ਪੁਰਾਣੀ ਦਵਾਈ ਆਈਡੀ",
+    newMedicineId: "ਨਵੀਂ ਦਵਾਈ ਆਈਡੀ",
+    status: "ਸਥਿਤੀ",
+    swappedAt: "ਬਦਲਣਾ ਦਾ ਸਮਾਂ",
+    actions: "ਕਾਰਵਾਈਆਂ",
+    noSwaps: "ਕੋਈ ਬਦਲਣਾ ਨਹੀਂ ਮਿਲੀਆਂ।",
+    addMedicineSwap: "ਦਵਾਈ ਬਦਲਣਾ ਸ਼ਾਮਲ ਕਰੋ",
+    cancel: "ਰਦ੍ਦ ਕਰੋ",
+    add: "ਸ਼ਾਮਲ ਕਰੋ"
   }
 };
 
@@ -101,7 +101,7 @@ export default function MedicineSwapsPage() {
         >
           <MenuItem value="en">English</MenuItem>
           <MenuItem value="hi">हिन्दी</MenuItem>
-          <MenuItem value="kn">ಕನ್ನಡ</MenuItem>
+          <MenuItem value="pa">ਪੰਜਾਬੀ</MenuItem>
         </Select>
       </Box>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={3}>

@@ -9,7 +9,7 @@ const API_URL = 'http://127.0.0.1:5000';
 const LANGUAGES = [
   { code: 'en-US', label: 'English' },
   { code: 'hi-IN', label: 'Hindi' },
-  { code: 'kn-IN', label: 'Kannada' },
+  { code: 'pa-IN', label: 'Punjabi' },
   { code: 'bho', label: 'Bhojpuri' }, // Not all browsers support this, but you can try
   { code: 'har', label: 'Haryanvi' }  // Not all browsers support this, but you can try
 ];

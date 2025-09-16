@@ -12,7 +12,7 @@ const LanguageSwitcher = () => {
     <div style={{ marginBottom: '1rem' }}>
       <button onClick={() => changeLanguage('en')}>English</button>
       <button onClick={() => changeLanguage('hi')}>हिन्दी</button>
-      <button onClick={() => changeLanguage('kn')}>ಕನ್ನಡ</button>
+      <button onClick={() => changeLanguage('pa')}>ਪੰਜਾਬੀ</button>
     </div>
   );
 };
